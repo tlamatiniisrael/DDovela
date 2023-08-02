@@ -31,7 +31,6 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 
-//const db = SQLite.openDatabase({ name: 'gastos.db', location: 'default' });
 const db = SQLite.openDatabase(
   {
     name: 'SQLite',
@@ -40,7 +39,7 @@ const db = SQLite.openDatabase(
   },
   () => { },
   error => {
-    console.log("ERROR: " + error);
+    console.log("ERROR: " + error.message);
   }
 );
 
@@ -61,8 +60,8 @@ const listUsers = async () => {
   let sql = "SELECT * FROM users";
   db.transaction((tx) => {
       tx.executeSql(sql, [], (tx, resultSet) => {
-          var length = resultSet.rows.length;
-          for (var i = 0; i < length; i++) {
+          const length = resultSet.rows.length;
+          for (let i = 0; i < length; i++) {
               console.log(resultSet.rows.item(i));
           }
       }, (error) => {
